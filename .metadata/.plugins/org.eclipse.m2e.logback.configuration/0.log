@@ -1,0 +1,30 @@
+2017-11-21 13:39:13,526 [Worker-19] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.vro:VehicleRoutingOptimization:0.0.1-SNAPSHOT @ D:\NEU - 1 - Fall 17\FAI\Programming\ParcelDeliverySystem\VehicleRoutingOptimization\pom.xml.
+2017-11-21 13:39:13,990 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-instances/1.7.2/jsprit-instances-1.7.2.pom
+2017-11-21 13:39:14,010 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-instances/1.7.2/jsprit-instances-1.7.2.pom
+2017-11-21 13:39:14,035 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit/1.7.2/jsprit-1.7.2.pom
+2017-11-21 13:39:14,053 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit/1.7.2/jsprit-1.7.2.pom
+2017-11-21 13:39:14,087 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-core/1.7.2/jsprit-core-1.7.2.pom
+2017-11-21 13:39:14,102 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-core/1.7.2/jsprit-core-1.7.2.pom
+2017-11-21 13:39:14,158 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-analysis/1.7.2/jsprit-analysis-1.7.2.pom
+2017-11-21 13:39:14,171 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-analysis/1.7.2/jsprit-analysis-1.7.2.pom
+2017-11-21 13:39:14,475 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-io/1.7.2/jsprit-io-1.7.2.pom
+2017-11-21 13:39:14,489 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-io/1.7.2/jsprit-io-1.7.2.pom
+2017-11-21 13:39:14,707 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-instances/1.7.2/jsprit-instances-1.7.2.jar
+2017-11-21 13:39:14,740 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-instances/1.7.2/jsprit-instances-1.7.2.jar
+2017-11-21 13:39:14,767 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-core/1.7.2/jsprit-core-1.7.2.jar
+2017-11-21 13:39:15,001 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-core/1.7.2/jsprit-core-1.7.2.jar
+2017-11-21 13:39:15,017 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-analysis/1.7.2/jsprit-analysis-1.7.2.jar
+2017-11-21 13:39:15,051 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-analysis/1.7.2/jsprit-analysis-1.7.2.jar
+2017-11-21 13:39:15,070 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-io/1.7.2/jsprit-io-1.7.2.jar
+2017-11-21 13:39:15,097 [Worker-19] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/graphhopper/jsprit-io/1.7.2/jsprit-io-1.7.2.jar
+2017-11-21 13:39:18,168 [Worker-19] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /VehicleRoutingOptimization/src/main/java
+2017-11-21 13:39:18,169 [Worker-19] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /VehicleRoutingOptimization/src/test/java
+2017-11-21 13:39:18,334 [Worker-19] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 13 sec
+2017-11-21 13:39:21,312 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-21 13:39:21,313 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\NEU - 1 - Fall 17\FAI\Programming\ParcelDeliverySystem\VehicleRoutingOptimization\src\main\resources
+2017-11-21 13:39:21,314 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-21 13:39:21,314 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\NEU - 1 - Fall 17\FAI\Programming\ParcelDeliverySystem\VehicleRoutingOptimization\src\test\resources
+2017-11-21 13:39:36,393 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-21 13:39:36,393 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\NEU - 1 - Fall 17\FAI\Programming\ParcelDeliverySystem\VehicleRoutingOptimization\src\main\resources
+2017-11-21 13:39:36,397 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-21 13:39:36,398 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\NEU - 1 - Fall 17\FAI\Programming\ParcelDeliverySystem\VehicleRoutingOptimization\src\test\resources
