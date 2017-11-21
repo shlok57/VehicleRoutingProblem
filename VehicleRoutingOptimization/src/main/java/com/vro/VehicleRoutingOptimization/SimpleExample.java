@@ -120,7 +120,7 @@ public class SimpleExample {
          * plot
 		 */
         new Plotter(problem,bestSolution).plot("output/plot.png","simple example");
-
+        System.out.println("Test");
         /*
         render problem and solution with GraphStream
          */
