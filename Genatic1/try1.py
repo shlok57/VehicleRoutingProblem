@@ -1,11 +1,40 @@
 import random, heapq
 
-MUTATION_RATE = 0.2
+MUTATION_RATE = 0.1
 CROSSOVER_RATE = 0.5
-Master_Chromosome = [1,2,3,4,5,6]
+POPULATION_SIZE = 1000
+Master_Chromosome = [1,2,3,4,5,6,7,8,9]
 
-req_chro = [3,5,1,2,4,6]
+req_chro = [3,5,1,8,9,2,7,4,6]
 count = 0
+
+class PrioritySet(object):
+    def __init__(self):
+        self.heap = []
+        self.set = set()
+
+    def push(self, d):
+        if not d in self.set:
+            heapq.heappush(self.heap, d)
+            self.set.add(d)
+
+    def pop(self):
+        d = heapq.heappop(self.heap)
+        self.set.remove(d)
+        return d
+
+    def size(self):
+        return len(self.heap)
+
+    def __str__(self):
+        op = ""
+        for i in self.heap:
+            op += str(i)
+            op += "\n"
+        return op
+
+    def __getitem__(self, index):
+        return self.heap[index]
 
 def mutate(chromosome):
 
@@ -58,8 +87,8 @@ def crossover(a,b):
 def getProb():
     return random.random()
 
-def getNodeSet():
-    return [1,2,3,4,5]
+# def getNodeSet():
+#     return [1,2,3,4,5,6,7]
 
 def get_random(li):
     index = random.randint(0, len(li)-1)
@@ -68,15 +97,15 @@ def get_random(li):
 def copy(li):
     return [i for i in li]
 
-population = []
+population = set()
 
-for p in range(100):
+while len(population) <= POPULATION_SIZE:
     TempSet = copy(Master_Chromosome)
     chromosome = []
     while len(TempSet) > 0:
         index = (int)(getProb() * len(TempSet))
         chromosome.append(TempSet.pop(index))            
-    population.append(chromosome)
+    population.add(tuple(chromosome))
     # print str(p) + " ",
     # print chromosome
 
@@ -89,31 +118,35 @@ def get_fitness(li):
     return fitness
 
 def getPopulationFitness(p):
-    h = []
+    h = PrioritySet()
     for i in p:
         # print i,
         # print " -> " + str(get_fitness(i))
-        h.append((get_fitness(i),i))
+        h.push((get_fitness(i),i))
     return h
 
 # print population
 h = getPopulationFitness(population)
-heapq.heapify(h)
-for i in h:
-    print i
+print h
 
-
-while count < 1000:
-    ax = heapq.heappop(h)
-    bx = heapq.heappop(h)
-    a,b = crossover(ax[1],bx[1])
+while True: # count < 10000:
+    ax = h.pop()
+    bx = h.pop()
+    a,b = crossover(list(ax[1]),list(bx[1]))
     # print a
     a = mutate(a)
     b = mutate(b)
     # print a
-    heapq.heappush(h,(get_fitness(a),a))
+    h.push((get_fitness(a),tuple(a)))
     # print b
-    heapq.heappush(h,(get_fitness(b),b))
+    h.push((get_fitness(b),tuple(b)))
+    while h.size() < POPULATION_SIZE:
+        TempSet = copy(Master_Chromosome)
+        chromosome = []
+        while len(TempSet) > 0:
+            index = (int)(getProb() * len(TempSet))
+            chromosome.append(TempSet.pop(index))
+        h.push((get_fitness(chromosome),tuple(chromosome)))
     print (str)(count+1) + " -> ",
     print a, " ",
     print " -> ",
@@ -126,3 +159,4 @@ while count < 1000:
 
 print h[0]
 print h[1]
+print h.size()
