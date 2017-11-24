@@ -3,13 +3,13 @@ import random, math
 
 ################  CONSTANTS  #######################
 
-MUTATION_RATE = 0.1
-CROSSOVER_RATE = 0.5
+MUTATION_RATE = 0.05
+CROSSOVER_RATE = 0.3
 POPULATION_SIZE = 100
 FITNESS = 0
-TRUCKS = 5
+TRUCKS = 10
 DEPOT = None
-CAPACITY = 100
+CAPACITY = 220
 INF = float("inf")
 
 ################  CLASSES  ###########################
@@ -210,6 +210,16 @@ def getPopulationFitness(p):
         h.push((get_fitness(i),i))
     return h
 
+def create_new():
+
+    TempSet = copy(Customers)
+    chromosome = []
+    while len(TempSet) > 0:
+        index = (int)(getProb() * len(TempSet))
+        chromosome.append(TempSet.pop(index))
+
+    return chromosome 
+
 #####################   EVOLUTION FUNTION   ##############################
 
 def Genatic_Algo():
@@ -217,19 +227,23 @@ def Genatic_Algo():
     print "POPULATION GENERATED... EVOLUTION BEGINING ..."
     minimum_chrom = h[0]
     count = 0
-    while h[0][0] > 1800:
-    # while count < 300:
+    # while h[0][0] > 1800:
+    while count < 3000:
         ax = h.pop()
         bx = h.pop()
         a,b = crossover(list(ax[1]),list(bx[1]))
         a = mutate(a)
+        while get_fitness(a) == INF:
+            a = create_new()
         b = mutate(b)
+        while get_fitness(b) == INF:
+            b = create_new()
         # print a
         h.push((get_fitness(a),tuple(a)))
         # print b
         h.push((get_fitness(b),tuple(b)))
         while h.size() < POPULATION_SIZE:
-            TempSet = copy(Master_Chromosome)
+            TempSet = copy(Customers)
             chromosome = []
             count += 1
             while len(TempSet) > 0:
@@ -238,8 +252,13 @@ def Genatic_Algo():
             h.push((get_fitness(chromosome),tuple(chromosome)))
         count = count + 1
         
+        if count % 1000 == 0:
+            print count,
+            print " Generation done"
+
         if h[0][0] < minimum_chrom[0]:
             minimum_chrom = h[0] 
+            print "CurrMin: ",
             print minimum_chrom[0]
     
     print_tuple(minimum_chrom[1])
@@ -272,16 +291,29 @@ def create_data_array():
     demands =  [0, 19, 21, 6, 19, 7, 12, 16, 6, 16, 8, 14, 21, 16, 3, 22, 18,
                 19, 1, 24, 8, 12, 4, 8, 24, 24, 2, 20, 15, 2, 14, 9]
 
-    for i in range(1,len(locations)):
+    locations1 = [(40,40) ,(22,22) ,(36,26) ,(21,45) ,(45,35) ,(55,20) ,(33,34) ,(50,50) ,(55,45) ,
+                    (26,59) ,(40,66) ,(55,65) ,(35,51) ,(62,35) ,(62,57) ,(62,24) ,(21,36) ,(33,44) ,(9,56) ,
+                    (62,48) ,(66,14) ,(44,13) ,(26,13) ,(11,28) ,(7,43) ,(17,64) ,(41,46) ,(55,34) ,(35,16) ,
+                    (52,26) ,(43,26) ,(31,76) ,(22,53) ,(26,29) ,(50,40) ,(55,50) ,(54,10) ,(60,15) ,
+                    (47,66) ,(30,60) ,(30,50) ,(12,17) ,(15,14) ,(16,19) ,(21,48) ,(50,30) ,(51,42) ,(50,15) ,
+                    (48,21) ,(12,38) ,(15,56) ,(29,39) ,(54,38) ,(55,57) ,(67,41) ,(10,70) ,(6,25) ,      
+                    (65,27) ,(40,60) ,(70,64) ,(64,4) ,(36,6) ,(30,20) ,(20,30) ,(15,5) ,(50,70) ,(57,72) ,
+                    (45,42) ,(38,33) ,(50,4) ,(66,8) ,(59,5) ,(35,60) ,(27,24) ,(40,20) ,(40,37)]
+    
+    demands1 = [0,18,26,11,30,21,19,15,16,29,26,37,16,12,31,8,19,20,13,15,22,28,12,6,27,14,
+                18,17,29,13,22,25,28,27,19,10,12,14,24,16,33,15,11,18,17,21,27,19,20,5,22,
+                12,19,22,16,7,26,14,21,24,13,15,18,11,28,9,37,30,10,8,11,3,1,6,10,20]
+
+    for i in range(1,len(locations1)):
         c = Customer(i)
-        c.setPosition(locations[i][0],locations[i][1])
-        c.setDemand(demands[i])
+        c.setPosition(locations1[i][0],locations1[i][1])
+        c.setDemand(demands1[i])
         Customers.append(c)
     
     i = 0
     c = Customer(i)
-    c.setPosition(locations[i][0],locations[i][1])
-    c.setDemand(demands[i])
+    c.setPosition(locations1[i][0],locations1[i][1])
+    c.setDemand(demands1[i])
     global DEPOT
     DEPOT = c
 
