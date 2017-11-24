@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1511295026269_1" label="jsprit" name="jsprit">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit-core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit-analysis" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit-io" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit-examples" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/jsprit-instances" type="4"/>
+</workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1511289350312_0" label="Window Working Set" name="Aggregate for window 1511289350312"/>
 </workingSetManager>
