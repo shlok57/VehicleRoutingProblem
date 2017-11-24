@@ -1,4 +1,7 @@
-import random, heapq, math
+import heapq
+import random, math
+
+################  CONSTANTS  #######################
 
 MUTATION_RATE = 0.1
 CROSSOVER_RATE = 0.5
@@ -8,6 +11,8 @@ TRUCKS = 5
 DEPOT = None
 CAPACITY = 100
 INF = float("inf")
+
+################  CLASSES  ###########################
 
 class PrioritySet(object):
     
@@ -78,19 +83,54 @@ class Customer:
     def __str__(self):
         return str(self.name) #+ " -> (" + str(self.pos.x) + ", " + \
                 #str(self.pos.y) + ") -> " + str(self.demand)
+    
+###################   UTIL FUNCTIONS   ###################################
 
-class VRP:
 
-    def __init__(self):
-        pass
+def copy(li):
+    return [i for i in li]
 
-    # methods
+def getProb():
+    return random.random()
+
+def get_random(li):
+    index = random.randint(0, len(li)-1)
+    return li[index]
+
+def get_distance(cus1, cus2):
+    # Euclideian
+    dist = 0 
+    dist = math.sqrt(((cus1.pos.x - cus2.pos.x) ** 2) + ((cus1.pos.y - cus2.pos.y) ** 2))
+    return dist
+
+def print_tuple(t):
+    print "0", 
+    for i in t:
+        print i,        
+    print "0 ",
+    print " -> f: " + str(get_fitness(t))
+
+def print_population(p):
+    for i in p:
+        for c in i:
+            print c,
+        print "\n"
+    
+def print_population_heap(p):
+    count = 1
+    for i in p:
+        print count, " )  "
+        print_tuple(i[1])
+        count += 1
+        print "\n"
+
+
+###################   HELPER FUNCTIONS   #################################
 
 def mutate(chromosome):
 
     temp_chromosome = [i for i in chromosome]
     # print temp_chromosome
-    # temp_nodeset = getNodeSet()
     replaceSet = []
     for i in chromosome:
         if getProb() < MUTATION_RATE:
@@ -98,9 +138,6 @@ def mutate(chromosome):
             index = temp_chromosome.index(i)
             temp_chromosome[index] = -1
     
-    # print temp_chromosome
-    # print replaceSet
-
     for i in temp_chromosome:
         if i == -1:
             index = temp_chromosome.index(i)
@@ -110,18 +147,10 @@ def mutate(chromosome):
     
     return temp_chromosome
 
-def copy(li):
-    return [i for i in li]
 
 def crossover(a,b):
 
     if getProb() < CROSSOVER_RATE:
-        # print "Yea i do it "
-        # cross_point = (int)(getProb() * len(a))
-        # new_a = a[:cross_point] + b[cross_point:]
-        # new_b = b[:cross_point] + a[cross_point:]
-        # return new_a, new_b
-
         cxpoint1, cxpoint2 = sorted(random.sample(range(len(a)), 2))
         temp1 = a[cxpoint1:cxpoint2+1] + b
         temp2 = b[cxpoint1:cxpoint2+1] + a
@@ -145,26 +174,9 @@ def crossover(a,b):
     
     return a, b
 
-def getProb():
-    return random.random()
-
-# def getNodeSet():
-#     return [1,2,3,4,5,6,7]
-
-def get_random(li):
-    index = random.randint(0, len(li)-1)
-    return li[index]
-
-def copy(li):
-    return [i for i in li]
 
 def get_fitness(li):
-    # fitness = 0
-    # # print req_chro
-    # # print li
-    # for i in range(len(li)):
-    #     fitness += abs(li[i] - req_chro[i])
-    # return fitness
+    
     num_custo = len(li)
     fitness = 0
 
@@ -188,47 +200,28 @@ def get_fitness(li):
         else:
             curr_demand += temp[i].demand
 
-    # print_tuple(li)
-    # print
     return fitness
     # return random.randint(0,100)
 
-
-def get_distance(cus1, cus2):
-    # Euclideian
-    dist = 0 
-    dist = math.sqrt(((cus1.pos.x - cus2.pos.x) ** 2) + ((cus1.pos.y - cus2.pos.y) ** 2))
-    return dist
-
 def getPopulationFitness(p):
+    
     h = PrioritySet()
     for i in p:
-        # print i,
-        # print " -> " + str(get_fitness(i))
-        # print_tuple(i)
         h.push((get_fitness(i),i))
     return h
 
-def print_tuple(t):
-    print "0", 
-    for i in t:
-        print i,        
-    print "0 ",
-    print " -> f: " + str(get_fitness(t))
+#####################   EVOLUTION FUNTION   ##############################
 
 def Genatic_Algo():
-    print "here"
+    
+    print "POPULATION GENERATED... EVOLUTION BEGINING ..."
     minimum_chrom = h[0]
-    # print str(minimum_chrom[0]) + " ",
-    # print_tuple(minimum_chrom[1])
     count = 0
-    while h[0][0] > 1000:
+    while h[0][0] > 1800:
     # while count < 300:
         ax = h.pop()
         bx = h.pop()
-        # print list(ax[1]),list(bx[1])
         a,b = crossover(list(ax[1]),list(bx[1]))
-        # print a
         a = mutate(a)
         b = mutate(b)
         # print a
@@ -243,29 +236,19 @@ def Genatic_Algo():
                 index = (int)(getProb() * len(TempSet))
                 chromosome.append(TempSet.pop(index))
             h.push((get_fitness(chromosome),tuple(chromosome)))
-        # print (str)(count+1) + " -> ",
-        # # print a, " ",
-        # print_tuple(a)
-        # print " (" + str(len(a)) + ")",
-        # print " -> ",
-        # print_tuple(b)
-        # print " (" + str(len(b)) + ")",
-        # print
-        # print b
         count = count + 1
-        # print count
+        
         if h[0][0] < minimum_chrom[0]:
             minimum_chrom = h[0] 
             print minimum_chrom[0]
     
-    print minimum_chrom[0]
     print_tuple(minimum_chrom[1])
     print count
-    # print h[0]
-    # print h[1]
-    # print h.size()
+    
 
-def initial():
+#####################   INITIAL POPULATION   #############################
+
+def initialize_population():
 
     while len(population) < POPULATION_SIZE:
         TempSet = copy(Customers)
@@ -274,12 +257,10 @@ def initial():
             index = (int)(getProb() * len(TempSet))
             chromosome.append(TempSet.pop(index))
 
-        # chromosome.insert(0,DEPOT)
-        # chromosome.append(DEPOT)                    
         if get_fitness(chromosome) != INF:
             population.add(tuple(chromosome))
-        # print str(p) + " ",
-        # print chromosome
+    
+########################   DATA   ########################################
 
 def create_data_array():
 
@@ -290,11 +271,6 @@ def create_data_array():
 
     demands =  [0, 19, 21, 6, 19, 7, 12, 16, 6, 16, 8, 14, 21, 16, 3, 22, 18,
                 19, 1, 24, 8, 12, 4, 8, 24, 24, 2, 20, 15, 2, 14, 9]
-
-    start_times =  [28842, 50891, 10351, 49370, 22553, 53131, 8908,
-                    56509, 54032, 10883, 60235, 46644, 35674, 30304,
-                    39950, 38297, 36273, 52108, 2333, 48986, 44552,
-                    31869, 38027, 5532, 57458, 51521, 11039, 31063]
 
     for i in range(1,len(locations)):
         c = Customer(i)
@@ -312,31 +288,15 @@ def create_data_array():
     for j in range(TRUCKS-1):
         Customers.append(DEPOT)
 
-def print_population(p):
-
-    for i in p:
-        for c in i:
-            print c,
-        print "\n"
-    
-def print_population_heap(p):
-    count = 1
-    for i in p:
-        print count, " )  "
-        print_tuple(i[1])
-        count += 1
-        print "\n"
+#####################   MAIN   ########################################### 
 
 Customers = []
 population = set()
 
 if __name__ == '__main__':
     create_data_array()
-    
-
-# print Customers
-initial()
-# print_population(population)
-h = getPopulationFitness(population)
-# print_population_heap(h)
-Genatic_Algo()
+    initialize_population()
+    # print_population(population)
+    h = getPopulationFitness(population)
+    # print_population_heap(h)
+    Genatic_Algo()
