@@ -3,8 +3,8 @@ import random, math
 
 ################  CONSTANTS  #######################
 
-MUTATION_RATE = 0.05
-CROSSOVER_RATE = 0.3
+MUTATION_RATE = 0.1
+CROSSOVER_RATE = 0.5
 POPULATION_SIZE = 100
 FITNESS = 0
 TRUCKS = 10
@@ -29,6 +29,13 @@ class PrioritySet(object):
         d = heapq.heappop(self.heap)
         self.set.remove(d)
         return d
+
+    def poop(self):
+        d = self.heap[-1]
+        self.heap = self.heap[:-1]
+        self.set.remove(d)
+        return d
+
 
     def size(self):
         return len(self.heap)
@@ -124,53 +131,77 @@ def print_population_heap(p):
         count += 1
         print "\n"
 
+def _pickpivots(self):
+        left = random.randint(1, num_cities - 2)
+        right = random.randint(left, num_cities - 1)
+        return left, right
 
 ###################   HELPER FUNCTIONS   #################################
 
 def mutate(chromosome):
 
-    temp_chromosome = [i for i in chromosome]
+    temp = [i for i in chromosome]
+    
+    if getProb() < MUTATION_RATE:
+        left = random.randint(1, len(temp) - 2)
+        right = random.randint(left, len(temp) - 1)   
+        temp[left], temp[right] = temp[right], temp[left]
     # print temp_chromosome
-    replaceSet = []
-    for i in chromosome:
-        if getProb() < MUTATION_RATE:
-            replaceSet.append(i)
-            index = temp_chromosome.index(i)
-            temp_chromosome[index] = -1
+    # replaceSet = []
+    # for i in chromosome:
+    #     if getProb() < MUTATION_RATE:
+    #         replaceSet.append(i)
+    #         index = temp_chromosome.index(i)
+    #         temp_chromosome[index] = -1
     
-    for i in temp_chromosome:
-        if i == -1:
-            index = temp_chromosome.index(i)
-            new_cust = get_random(replaceSet)
-            temp_chromosome[index] = new_cust
-            replaceSet.remove(new_cust)
+    # for i in temp_chromosome:
+    #     if i == -1:
+    #         index = temp_chromosome.index(i)
+    #         new_cust = get_random(replaceSet)
+    #         temp_chromosome[index] = new_cust
+    #         replaceSet.remove(new_cust)
     
-    return temp_chromosome
+    return temp
 
 
 def crossover(a,b):
 
     if getProb() < CROSSOVER_RATE:
-        cxpoint1, cxpoint2 = sorted(random.sample(range(len(a)), 2))
-        temp1 = a[cxpoint1:cxpoint2+1] + b
-        temp2 = b[cxpoint1:cxpoint2+1] + a
-        new_a = []
-        depo_count = 0
-        for x in temp1:
-            if x == DEPOT and depo_count < TRUCKS - 1:
-                new_a.append(x)
-                depo_count += 1
-            elif x not in new_a:
-                new_a.append(x)
-        new_b = []
-        depo_count = 0
-        for x in temp2:
-            if x == DEPOT and depo_count < TRUCKS - 1:
-                new_b.append(x)
-                depo_count += 1
-            elif x not in new_b:
-                new_b.append(x)
-        return new_a, new_b
+        # cxpoint1, cxpoint2 = sorted(random.sample(range(len(a)), 2))
+        # temp1 = a[cxpoint1:cxpoint2+1] + b
+        # temp2 = b[cxpoint1:cxpoint2+1] + a
+        # new_a = []
+        # depo_count = 0
+        # for x in temp1:
+        #     if x == DEPOT and depo_count < TRUCKS - 1:
+        #         new_a.append(x)
+        #         depo_count += 1
+        #     elif x not in new_a:
+        #         new_a.append(x)
+        # new_b = []
+        # depo_count = 0
+        # for x in temp2:
+        #     if x == DEPOT and depo_count < TRUCKS - 1:
+        #         new_b.append(x)
+        #         depo_count += 1
+        #     elif x not in new_b:
+        #         new_b.append(x)
+        # return new_a, new_b
+        left = random.randint(1, len(a) - 2)
+        right = random.randint(left, len(a) - 1)
+        # print left, " ", right
+        c1 = [c for c in a[0:] if c not in b[left:right+1]]
+        # print len(c1)
+        p1 = c1[:left] + b[left:right+1] + c1[left:]
+        # print len(p1)
+        c2 = [c for c in b[0:] if c not in a[left:right+1]]
+        p2 = c2[:left] + a[left:right+1] + c2[left:]
+
+        # print_tuple(a)
+        # print_tuple(b)
+        # print_tuple(p1)
+        # print_tuple(p2)
+        # raw_input()
     
     return a, b
 
@@ -228,16 +259,16 @@ def Genatic_Algo():
     minimum_chrom = h[0]
     count = 0
     # while h[0][0] > 1800:
-    while count < 3000:
+    while count < 10000:
         ax = h.pop()
         bx = h.pop()
         a,b = crossover(list(ax[1]),list(bx[1]))
         a = mutate(a)
-        while get_fitness(a) == INF:
-            a = create_new()
+        # while get_fitness(a) == INF:
+        #     a = create_new()
         b = mutate(b)
-        while get_fitness(b) == INF:
-            b = create_new()
+        # while get_fitness(b) == INF:
+        #     b = create_new()
         # print a
         h.push((get_fitness(a),tuple(a)))
         # print b
@@ -283,15 +314,15 @@ def initialize_population():
 
 def create_data_array():
 
-    locations = [[82, 76], [96, 44], [50, 5], [49, 8], [13, 7], [29, 89], [58, 30], [84, 39],
-                [14, 24], [12, 39], [3, 82], [5, 10], [98, 52], [84, 25], [61, 59], [1, 65],
-                [88, 51], [91, 2], [19, 32], [93, 3], [50, 93], [98, 14], [5, 42], [42, 9],
-                [61, 62], [9, 97], [80, 55], [57, 69], [23, 15], [20, 70], [85, 60], [98, 5]]
+    # locations = [[82, 76], [96, 44], [50, 5], [49, 8], [13, 7], [29, 89], [58, 30], [84, 39],
+    #             [14, 24], [12, 39], [3, 82], [5, 10], [98, 52], [84, 25], [61, 59], [1, 65],
+    #             [88, 51], [91, 2], [19, 32], [93, 3], [50, 93], [98, 14], [5, 42], [42, 9],
+    #             [61, 62], [9, 97], [80, 55], [57, 69], [23, 15], [20, 70], [85, 60], [98, 5]]
 
-    demands =  [0, 19, 21, 6, 19, 7, 12, 16, 6, 16, 8, 14, 21, 16, 3, 22, 18,
-                19, 1, 24, 8, 12, 4, 8, 24, 24, 2, 20, 15, 2, 14, 9]
+    # demands =  [0, 19, 21, 6, 19, 7, 12, 16, 6, 16, 8, 14, 21, 16, 3, 22, 18,
+    #             19, 1, 24, 8, 12, 4, 8, 24, 24, 2, 20, 15, 2, 14, 9]
 
-    locations1 = [(40,40) ,(22,22) ,(36,26) ,(21,45) ,(45,35) ,(55,20) ,(33,34) ,(50,50) ,(55,45) ,
+    locations = [(40,40) ,(22,22) ,(36,26) ,(21,45) ,(45,35) ,(55,20) ,(33,34) ,(50,50) ,(55,45) ,
                     (26,59) ,(40,66) ,(55,65) ,(35,51) ,(62,35) ,(62,57) ,(62,24) ,(21,36) ,(33,44) ,(9,56) ,
                     (62,48) ,(66,14) ,(44,13) ,(26,13) ,(11,28) ,(7,43) ,(17,64) ,(41,46) ,(55,34) ,(35,16) ,
                     (52,26) ,(43,26) ,(31,76) ,(22,53) ,(26,29) ,(50,40) ,(55,50) ,(54,10) ,(60,15) ,
@@ -300,20 +331,20 @@ def create_data_array():
                     (65,27) ,(40,60) ,(70,64) ,(64,4) ,(36,6) ,(30,20) ,(20,30) ,(15,5) ,(50,70) ,(57,72) ,
                     (45,42) ,(38,33) ,(50,4) ,(66,8) ,(59,5) ,(35,60) ,(27,24) ,(40,20) ,(40,37)]
     
-    demands1 = [0,18,26,11,30,21,19,15,16,29,26,37,16,12,31,8,19,20,13,15,22,28,12,6,27,14,
+    demands = [0,18,26,11,30,21,19,15,16,29,26,37,16,12,31,8,19,20,13,15,22,28,12,6,27,14,
                 18,17,29,13,22,25,28,27,19,10,12,14,24,16,33,15,11,18,17,21,27,19,20,5,22,
                 12,19,22,16,7,26,14,21,24,13,15,18,11,28,9,37,30,10,8,11,3,1,6,10,20]
 
-    for i in range(1,len(locations1)):
+    for i in range(1,len(locations)):
         c = Customer(i)
-        c.setPosition(locations1[i][0],locations1[i][1])
-        c.setDemand(demands1[i])
+        c.setPosition(locations[i][0],locations[i][1])
+        c.setDemand(demands[i])
         Customers.append(c)
     
     i = 0
     c = Customer(i)
-    c.setPosition(locations1[i][0],locations1[i][1])
-    c.setDemand(demands1[i])
+    c.setPosition(locations[i][0],locations[i][1])
+    c.setDemand(demands[i])
     global DEPOT
     DEPOT = c
 
