@@ -6,7 +6,7 @@ import new
 from ortools.constraint_solver._pywrapcp import new_BaseLns
 from itertools import repeat
 
-with open('data2.json') as inputFile:
+with open('data.json') as inputFile:
     data = json.load(inputFile)
 
 # print "VehicleCap: ",data["vehicleCapacity"]
@@ -169,45 +169,3 @@ for k,v in routes.iteritems():
     totalDist += util.calculateRouteCost(v)
     print k,"-",v
 print totalDist
- 
-# for i in range(l):
-#     routes.append(depot)
-#     if allCustomersConsidered(customerServed):
-#         break
-#     if customerServed[cust_pairs[i][0]] == False and customerServed[cust_pairs[i][1]] == False:
-#         customerServed[cust_pairs[i][0]] = True
-#         customerServed[cust_pairs[i][1]] = True
-#         routes.append([cust_pairs[i][0],cust_pairs[i][1]])
-#     for j in range(i+1,l):
-#         if customerServed[cust_pairs[j][1]] == True:
-#             continue
-#         res = inPrevious(cust_pairs[j][0],routes[i])
-#         if res == 0 and capacityValid(routes[i], cust_pairs[j][1]):
-#             customerServed[cust_pairs[j][1]] = True
-#             routes[i].append(cust_pairs[j][1]) #matched at end, add the other tuple at end
-#         elif res == 1 and capacityValid(routes[i], cust_pairs[j][1]):
-#             customerServed[cust_pairs[j][1]] = True
-#             routes[i].insert(0,cust_pairs[j][1]) #matched at start, add the other tuple at start
-#         
-#         #try with the other tuple
-#         else:
-#             if customerServed[cust_pairs[j][0]] == True:
-#                 continue
-#             res = inPrevious(cust_pairs[j][1],routes[i])
-#             if res == 0 and capacityValid(routes[i], cust_pairs[j][0]):
-#                 customerServed[cust_pairs[j][0]] = True
-#                 routes[i].append(cust_pairs[j][0]) #matched at end, add the other tuple at end
-#             elif res == 1 and capacityValid(routes[i], cust_pairs[j][0]):
-#                 customerServed[cust_pairs[j][0]] = True
-#                 routes[i].insert(0,cust_pairs[j][0]) #matched at start, add the other tuple at start
-# 
-# repeat = []
-# for r in routes:
-#     if r in repeat and r != depot :
-#         print "repeat"
-#     elif len(r) > 2:
-#         repeat.append(r)
-#         
-# print len(repeat)
-# for r in repeat:
-#     print r
