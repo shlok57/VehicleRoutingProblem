@@ -4,7 +4,7 @@ import random, math
 ################  CONSTANTS  #######################
 
 MUTATION_RATE = 0.1
-CROSSOVER_RATE = 0.5
+CROSSOVER_RATE = 0.7
 POPULATION_SIZE = 100
 FITNESS = 0
 TRUCKS = 10
@@ -35,7 +35,6 @@ class PrioritySet(object):
         self.heap = self.heap[:-1]
         self.set.remove(d)
         return d
-
 
     def size(self):
         return len(self.heap)
@@ -131,10 +130,6 @@ def print_population_heap(p):
         count += 1
         print "\n"
 
-def _pickpivots(self):
-        left = random.randint(1, num_cities - 2)
-        right = random.randint(left, num_cities - 1)
-        return left, right
 
 ###################   HELPER FUNCTIONS   #################################
 
@@ -192,11 +187,11 @@ def crossover(a,b):
         # print left, " ", right
         c1 = [c for c in a[0:] if c not in b[left:right+1]]
         # print len(c1)
-        p1 = c1[:left] + b[left:right+1] + c1[left:]
+        a1 = c1[:left] + b[left:right+1] + c1[left:]
         # print len(p1)
         c2 = [c for c in b[0:] if c not in a[left:right+1]]
-        p2 = c2[:left] + a[left:right+1] + c2[left:]
-
+        b1 = c2[:left] + a[left:right+1] + c2[left:]
+        return a1, b1
         # print_tuple(a)
         # print_tuple(b)
         # print_tuple(p1)
@@ -259,20 +254,25 @@ def Genatic_Algo():
     minimum_chrom = h[0]
     count = 0
     # while h[0][0] > 1800:
-    while count < 10000:
+    while count < 3000:
         ax = h.pop()
         bx = h.pop()
         a,b = crossover(list(ax[1]),list(bx[1]))
         a = mutate(a)
-        # while get_fitness(a) == INF:
-        #     a = create_new()
+        while get_fitness(a) == INF:
+            a = create_new()
         b = mutate(b)
-        # while get_fitness(b) == INF:
-        #     b = create_new()
-        # print a
-        h.push((get_fitness(a),tuple(a)))
-        # print b
-        h.push((get_fitness(b),tuple(b)))
+        while get_fitness(b) == INF:
+            b = create_new()
+        if get_fitness(a) != INF:
+            h.push((get_fitness(a),tuple(a)))
+        else:
+            h.push(ax)
+        if get_fitness(b) != INF:
+            h.push((get_fitness(b),tuple(b)))
+        else:
+            h.push(bx)
+
         while h.size() < POPULATION_SIZE:
             TempSet = copy(Customers)
             chromosome = []
