@@ -1,7 +1,10 @@
 import json
 import operator
-from math import degrees, atan2
-import or_tsp
+from math import degrees, atan2, sqrt
+import random
+from ortools.constraint_solver import pywrapcp
+from ortools.constraint_solver import routing_enums_pb2
+
 
 class Position:
 
@@ -48,13 +51,105 @@ def print_tuple(t):
 def copy(li):
     return [i for i in li]
 
+def get_distance(cus1, cus2):
+    # Euclideian
+    dist = 0 
+    dist = sqrt(((cus1.pos.x - cus2.pos.x) ** 2) + ((cus1.pos.y - cus2.pos.y) ** 2))
+    return dist
+
 def calculateDepotAngle(x,y,depot_x,depot_y):
     angle = degrees(atan2(y - depot_y, x - depot_x))
     bearing = (90 - angle) % 360
     return bearing
 
+def make_dictionary(route):
+    global route_node
+    route_node = {}
+    counter = 0
+    for r in route:
+        route_node[counter] = r
+        counter += 1
+    # for k in route_node.keys():
+    #     print k, " ", route_node[k]
 
-with open('data4.json') as inputFile:
+def get_route(route):
+    final = []
+    for r in route:
+        final.append(route_node[r])
+    return final
+
+def get_demand_route(route):
+    route_demand = 0
+    for c in route:
+        route_demand += c.demand
+    return route_demand
+
+def get_cost_route(route):
+    route_cost = 0
+    for i in range(len(route)- 1):
+        route_cost += get_distance(route[i], route[i+1])
+    return route_cost
+
+def print_solution(final_routes):
+    COST = 0
+    for r in final_routes:
+        print_tuple(r)
+        print get_demand_route(r)
+        cost = get_cost_route(r)
+        print cost
+        COST += cost 
+    print "Total Cost = ", COST
+
+def Distance(i, j):
+    I = route_node[i]
+    J = route_node[j]
+    # print "here ", I
+    # print J
+    return get_distance(I,J)
+
+def TSP(size):
+  # Create routing model
+    route_list = []
+    if size > 0:
+        # TSP of size args.tsp_size
+        # Second argument = 1 to build a single tour (it's a TSP).
+        # Nodes are indexed from 0 to parser_tsp_size - 1, by default the start of
+        # the route is node 0.
+        routing = pywrapcp.RoutingModel(size, 1, 0)
+
+        search_parameters = pywrapcp.RoutingModel.DefaultSearchParameters()
+        # Setting first solution heuristic (cheapest addition).
+        search_parameters.first_solution_strategy = (
+            routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+
+        routing.SetArcCostEvaluatorOfAllVehicles(Distance)
+        # Forbid node connections (randomly).
+        rand = random.Random()
+        rand.seed(0)
+
+        assignment = routing.Solve()
+        if assignment:
+            # Solution cost.
+            # print(assignment.ObjectiveValue())
+            # Inspect solution.
+            # Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
+            route_number = 0
+            node = routing.Start(route_number)
+            route = ''
+            while not routing.IsEnd(node):
+                route += str(node) + ' -> '
+                route_list.append(node)
+                node = assignment.Value(routing.NextVar(node))
+            route += '0'
+            route_list.append(0)
+            # print(route)
+        else:
+            print('No solution found.')
+            return -1
+    return route_list
+
+
+with open('data2.json') as inputFile:
     data = json.load(inputFile)
 
 noOfCustomers = len(data["nodes"])
@@ -75,8 +170,9 @@ for i in range(0,noOfCustomers):
     Customers.append(c)
 
 Customers.sort(key=lambda x: x.angleWithDepot, reverse=False)
-
+route_node = {}
 clusters = list()
+final_routes = list()
 tempCluster = list()
 cap = 0
 temp_Customers = copy(Customers)
@@ -92,6 +188,15 @@ while len(temp_Customers):
         tempCluster.append(currCust)
         cap += currCust.demand
         
+# print get_distance(DEPOT,Customers[0])
 clusters.append(tempCluster)
 for c in clusters:
-    print_tuple(c)
+    c.insert(0,DEPOT)
+    # print_tuple(c)
+    make_dictionary(c)
+    route = TSP(len(c))
+    # print route
+    route = get_route(route)
+    final_routes.append(route)
+
+print_solution(final_routes)
