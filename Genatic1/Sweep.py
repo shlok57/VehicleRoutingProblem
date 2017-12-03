@@ -39,8 +39,10 @@ class Customer:
         self.angleWithDepot = a
 
     def __str__(self):
-        return str(self.name) #+ " -> (" + str(self.pos.x) + ", " + \
+        # return str(self.name) #+ " -> (" + str(self.pos.x) + ", " + \
                 #str(self.pos.y) + ") -> " + str(self.demand)
+        return "(" + str(self.pos.x) + ", " + \
+                   str(self.pos.y) + " )"
 
 def print_tuple(t):
     print "[", 
@@ -149,7 +151,7 @@ def TSP(size):
     return route_list
 
 
-with open('data2.json') as inputFile:
+with open('data36.json') as inputFile:
     data = json.load(inputFile)
 
 noOfCustomers = len(data["nodes"])
