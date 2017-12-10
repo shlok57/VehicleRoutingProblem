@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.graphhopper.jsprit.core.algorithm.VehicleRoutingAlgorithm"/>
+<fullyQualifiedTypeName name="com.graphhopper.jsprit.io.algorithm.AlgorithmConfig"/>
+<fullyQualifiedTypeName name="org.apache.commons.configuration.XMLConfiguration"/>
+<fullyQualifiedTypeName name="com.graphhopper.jsprit.io.algorithm.VehicleRoutingAlgorithms"/>
+<fullyQualifiedTypeName name="com.graphhopper.jsprit.core.algorithm.box.Jsprit"/>
+<fullyQualifiedTypeName name="com.graphhopper.jsprit.core.algorithm.box.Jsprit.Builder"/>
+</qualifiedTypeNameHistroy>
