@@ -95,7 +95,7 @@ public class CVRPSolver {
 		// Set dataReaderGenerator
 		cvrp.setFileDataReaderGenerator(FileDataReaderGenerator.getDataFromFile(datafilePath));
 
-		// run Greedy search and genetic algorithm
+		// run sweep and genetic algorithm
 		cvrp.run(populationNumber, numberOfGenerations, crossoverRate, mutationRate);
 
 		// Print Solutions
@@ -125,7 +125,7 @@ public class CVRPSolver {
 	}
 
 	/**
-	 * run Greedy search and genetic algorithm over generations
+	 * run clustering and genetic algorithm over generations
 	 * 
 	 * @param populationNumber
 	 * @param numberOfGenerations
@@ -138,7 +138,7 @@ public class CVRPSolver {
 		// Initialize the data order locations in which they are to be traversed
 		initailizeData();
 
-		// Best Greedy Route for each ONE Vehicle
+		// Best Route for each ONE Vehicle
 		ArrayList<Integer> bestRouteForVehicle = new ArrayList<Integer>();
 
 		// Best Solution Routes
