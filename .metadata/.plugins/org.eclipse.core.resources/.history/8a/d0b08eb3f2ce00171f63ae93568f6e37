@@ -1,9 +1,0 @@
-package com.vro.VehicleRoutingOptimization;
-
-public class BruteAlgo {
-
-	public static void main(String[] args) {
-		
-	}
-
-}

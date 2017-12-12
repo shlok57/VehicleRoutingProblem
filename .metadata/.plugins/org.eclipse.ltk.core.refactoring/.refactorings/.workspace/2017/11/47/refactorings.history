@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;VehicleRoutingOptimization/src/main/java/com/vro/VehicleRoutingOptimization/myAlgo.xml&apos;" deleteContents="false" description="Delete resource &apos;VehicleRoutingOptimization/src/main/java/com/vro/VehicleRoutingOptimization/myAlgo.xml&apos;" element1="/VehicleRoutingOptimization/src/main/java/com/vro/VehicleRoutingOptimization/myAlgo.xml" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1511297857385"/>
-</session>
